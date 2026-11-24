@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Richieste in attesa</h1>
+{% if requests %}
+<table>
+  <tr><th>Utente</th><th>Applicazione</th><th></th></tr>
+  {% for r in requests %}
+  <tr>
+    <td>{{ r.user.username }}</td>
+    <td>{{ r.application.name }}</td>
+    <td>
+      <form method="post" action="{{ url_for('admin.decide', request_id=r.id, action='approve') }}" class="inline">
+        <button type="submit">Approva</button>
+      </form>
+      <form method="post" action="{{ url_for('admin.decide', request_id=r.id, action='reject') }}" class="inline">
+        <button type="submit">Rifiuta</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>Nessuna richiesta in attesa.</p>
+{% endif %}
+{% endblock %}

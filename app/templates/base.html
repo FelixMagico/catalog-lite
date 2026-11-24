@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Software Catalog</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav>
+    <strong>Software Catalog</strong>
+    {% if current_user.is_authenticated %}
+      {% if current_user.is_admin %}
+        <a href="{{ url_for('admin.requests_list') }}">Admin</a>
+      {% else %}
+        <a href="{{ url_for('main.index') }}">Catalogo</a>
+      {% endif %}
+      <form method="post" action="{{ url_for('auth.logout') }}" class="inline">
+        <span>{{ current_user.username }}</span>
+        <button type="submit">Esci</button>
+      </form>
+    {% else %}
+      <a href="{{ url_for('auth.login') }}">Accedi</a>
+      <a href="{{ url_for('auth.register') }}">Registrati</a>
+    {% endif %}
+  </nav>
+  <main>
+    {% for message in get_flashed_messages() %}
+      <p class="flash">{{ message }}</p>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

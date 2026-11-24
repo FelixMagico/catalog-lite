@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Catalogo software</h1>
+<table>
+  <tr><th>Nome</th><th>Descrizione</th><th>Stato</th></tr>
+  {% for a in apps %}
+  <tr>
+    <td>{{ a.name }}</td>
+    <td>{{ a.description }}</td>
+    <td>
+      {% if a.id in my_requests %}
+        {{ {'pending': 'In attesa', 'approved': 'Approvata', 'rejected': 'Rifiutata'}[my_requests[a.id]] }}
+      {% else %}
+        <form method="post" action="{{ url_for('main.request_install', app_id=a.id) }}" class="inline">
+          <button type="submit">Richiedi</button>
+        </form>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

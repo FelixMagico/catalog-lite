@@ -1,0 +1,20 @@
+# ambiente e segreti
+.env
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# database locali e test
+*.db
+*.sqlite3
+test-results/
+
+# editor e sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
